@@ -28,7 +28,6 @@
         </div>
       </div>
     </nav>
-    <router-view></router-view>
   </header>
 </template>
 

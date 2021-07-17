@@ -2,6 +2,7 @@
   <div class="container">
     <div class="row tabla">
       <div class="col p-0">
+        <h1 class="p-3">REGISTRO INGRESOS Y EGRESOS</h1>
         <table class="table" v-if="empleados.length > 0">
           <thead class="text-center thead-dark">
             <tr>
@@ -75,7 +76,7 @@ export default {
   methods: {
     getEmpleados() {
       axios
-        .get(process.env.VUE_APP_API_ROUTE+"empleado", {
+        .get(process.env.VUE_APP_API_ROUTE + "empleado", {
           headers: {
             "Content-Type": "application/json",
             apiKey:
@@ -92,7 +93,7 @@ export default {
     },
     getIngresos() {
       axios
-        .get(process.env.VUE_APP_API_ROUTE+"ingreso/hoy", {
+        .get(process.env.VUE_APP_API_ROUTE + "ingreso/hoy", {
           headers: {
             "Content-Type": "application/json",
             apiKey:
@@ -113,7 +114,7 @@ export default {
     },
     getEgresos() {
       axios
-        .get(process.env.VUE_APP_API_ROUTE+"egreso/hoy", {
+        .get(process.env.VUE_APP_API_ROUTE + "egreso/hoy", {
           headers: {
             "Content-Type": "application/json",
             apiKey:
@@ -153,7 +154,7 @@ export default {
           }
           let nota = res.value;
           axios
-            .post(process.env.VUE_APP_API_ROUTE+"ingreso", {
+            .post(process.env.VUE_APP_API_ROUTE + "ingreso", {
               headers: {
                 "Content-Type": "application/json",
                 apiKey:
@@ -201,7 +202,7 @@ export default {
           }
           let nota = res.value;
           axios
-            .post(process.env.VUE_APP_API_ROUTE+"egreso", {
+            .post(process.env.VUE_APP_API_ROUTE + "egreso", {
               headers: {
                 "Content-Type": "application/json",
                 apiKey:
