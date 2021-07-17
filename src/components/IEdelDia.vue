@@ -70,14 +70,12 @@ export default {
     };
   },
   mounted() {
-    console.log("MONTADO");
     this.getEmpleados();
-    console.log("FIN MONTADO");
   },
   methods: {
     getEmpleados() {
       axios
-        .get("http://localhost:5001/empleado", {
+        .get(process.env.VUE_APP_API_ROUTE+"empleado", {
           headers: {
             "Content-Type": "application/json",
             apiKey:
@@ -89,13 +87,12 @@ export default {
             this.empleados = res.data.empleados;
             this.getIngresos();
             this.getEgresos();
-            console.log(this.empleados);
           }
         });
     },
     getIngresos() {
       axios
-        .get("http://localhost:5001/ingreso/hoy", {
+        .get(process.env.VUE_APP_API_ROUTE+"ingreso/hoy", {
           headers: {
             "Content-Type": "application/json",
             apiKey:
@@ -116,7 +113,7 @@ export default {
     },
     getEgresos() {
       axios
-        .get("http://localhost:5001/egreso/hoy", {
+        .get(process.env.VUE_APP_API_ROUTE+"egreso/hoy", {
           headers: {
             "Content-Type": "application/json",
             apiKey:
@@ -156,7 +153,7 @@ export default {
           }
           let nota = res.value;
           axios
-            .post("http://localhost:5001/ingreso", {
+            .post(process.env.VUE_APP_API_ROUTE+"ingreso", {
               headers: {
                 "Content-Type": "application/json",
                 apiKey:
@@ -204,7 +201,7 @@ export default {
           }
           let nota = res.value;
           axios
-            .post("http://localhost:5001/egreso", {
+            .post(process.env.VUE_APP_API_ROUTE+"egreso", {
               headers: {
                 "Content-Type": "application/json",
                 apiKey:
