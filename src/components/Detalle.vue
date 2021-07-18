@@ -79,6 +79,7 @@
             <tr>
               <th scope="col" class="align-middle">Fecha</th>
               <th scope="col" class="align-middle">Hora</th>
+              <th scope="col" class="align-middle ">Nota</th>
               <th scope="col" class="align-middle">Imagen</th>
             </tr>
           </thead>
@@ -88,7 +89,10 @@
               <td class="align-middle text-center">
                 {{ normalizarHora(ingreso.hora) }}
               </td>
-              <td class="align-middle text-center">{{ imagen }}</td>
+                <td class="align-middle text-center max-ancho">
+                  {{ ingreso.nota }}
+                </td>
+              <td class="align-middle text-center"></td>
             </tr>
           </tbody>
         </table>
@@ -100,6 +104,7 @@
             <tr>
               <th scope="col" class="align-middle">Fecha</th>
               <th scope="col" class="align-middle">Hora</th>
+              <th scope="col" class="align-middle">Nota</th>
               <th scope="col" class="align-middle">Imagen</th>
             </tr>
           </thead>
@@ -109,7 +114,10 @@
               <td class="align-middle text-center">
                 {{ normalizarHora(egreso.hora) }}
               </td>
-              <td class="align-middle text-center">imagen</td>
+                <td class="align-middle text-center max-ancho">
+                  {{ egreso.nota }}
+                </td>
+              <td class="align-middle text-center"></td>
             </tr>
           </tbody>
         </table>
@@ -219,5 +227,11 @@ export default {
   box-shadow: 6px 10px 31px 0px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: 6px 10px 31px 0px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 6px 10px 31px 0px rgba(0, 0, 0, 0.75);
+}
+
+.max-ancho{
+  max-width: 300px;
+  word-wrap: break-word;
+  text-align: justify !important;
 }
 </style>
