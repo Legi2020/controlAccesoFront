@@ -170,14 +170,16 @@ export default {
                 this.getEmpleados();
                 return this.$swal({
                   icon: "success",
-                  title: res.data.message,
+                  title: "Éxito",
+                  text: res.data.message,
                   confirmButtonColor: "black",
                   confirmButtonText: "Cerrar",
                 });
               }
               return this.$swal({
-                icon: "error",
-                title: res.data.message,
+                icon: "warning",
+                title: "Atención",
+                text: res.data.message,
                 confirmButtonColor: "black",
                 confirmButtonText: "Cerrar",
               });
@@ -218,14 +220,16 @@ export default {
                 this.getEmpleados();
                 return this.$swal({
                   icon: "success",
-                  title: res.data.message,
+                  title: "Éxito",
+                  text: res.data.message,
                   confirmButtonColor: "black",
                   confirmButtonText: "Cerrar",
                 });
               }
               return this.$swal({
-                icon: "error",
-                title: res.data.message,
+                icon: "warning",
+                title: "Atención",
+                text: res.data.message,
                 confirmButtonColor: "black",
                 confirmButtonText: "Cerrar",
               });

@@ -30,4 +30,7 @@ export default {
 body {
   background: #d8d4d4;
 }
+#app{
+  margin-bottom: 150px;
+}
 </style>

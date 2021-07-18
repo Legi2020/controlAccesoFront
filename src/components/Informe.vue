@@ -18,7 +18,10 @@
               </td>
               <td class="align-middle text-center">OK</td>
               <td class="align-middle text-center">
-               Detalles
+                <router-link
+                  :to="{ name: 'detalle', params: { id: empleado.id, nombre: empleado.nombre } }"
+                  >Detalle</router-link
+                >
               </td>
             </tr>
           </tbody>

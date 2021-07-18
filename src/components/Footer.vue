@@ -18,6 +18,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 footer {
-  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  clear: both;
+  width: 100%;
+  height: 100px;
 }
 </style>
