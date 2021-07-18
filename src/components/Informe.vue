@@ -7,7 +7,6 @@
           <thead class="text-center thead-dark">
             <tr>
               <th scope="col" class="align-middle">Empleado</th>
-              <th scope="col" class="align-middle">Premio</th>
               <th scope="col" class="align-middle">Informe</th>
             </tr>
           </thead>
@@ -16,10 +15,9 @@
               <td class="align-middle text-center">
                 {{ empleado.apellido }} {{ empleado.nombre }}
               </td>
-              <td class="align-middle text-center">OK</td>
               <td class="align-middle text-center">
                 <router-link
-                  :to="{ name: 'detalle', params: { id: empleado.id, nombre: empleado.nombre } }"
+                  :to="{ name: 'detalle', params: { id: empleado.id } }"
                   >Detalle</router-link
                 >
               </td>

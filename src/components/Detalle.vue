@@ -1,46 +1,70 @@
 <template>
   <div class="container">
-    <div class="row mt-3">
-      <div class="col-6 p-4 mx-auto">
-        <h1 class="mb-4">Detalle: {{ this.nombreEmpleado }}</h1>
+    <div class="row mt-3 bg-white redondeado sombra">
+      <div class="col-12">
+        <h1 class="p-4 text-center" v-if="this.empleado">
+          Detalle: {{ this.empleado.nombre }}
+        </h1>
+        <hr />
+      </div>
+      <div class="col-12">
         <form @submit.prevent="getData()">
-          <div class="form-group">
-            <label for="fecha-desde-reporte">Fecha Desde</label>
-            <input
-              type="date"
-              class="form-control"
-              name="fechaDesde"
-              id="fecha-desde-reporte"
-              v-model="fechaDesde"
-            />
+          <div class="row p-2">
+            <div class="col-6">
+              <div class="form-group">
+                <label for="fecha-desde-reporte">Fecha Desde</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  name="fechaDesde"
+                  id="fecha-desde-reporte"
+                  v-model="fechaDesde"
+                />
+              </div>
+              <div class="form-group">
+                <label for="fecha-hasta-reporte">Fecha Hasta</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  name="fechaHasta"
+                  id="fecha-hasta-reporte"
+                  v-model="fechaHasta"
+                />
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label for="fecha-desde-reporte">Hora ingreso</label>
+                <input type="time" class="form-control" name="horIngreso" />
+              </div>
+              <div class="form-group">
+                <label for="fecha-desde-reporte">Hora egreso</label>
+                <input type="time" class="form-control" name="horaEgreso" />
+              </div>
+            </div>
+            <div class="col-12 mb-4">
+              <input
+                type="submit"
+                class="btn btn-primary btn-lg rounded-lg"
+                value="Buscar"
+              />
+            </div>
           </div>
-          <div class="form-group">
-            <label for="fecha-hasta-reporte">Fecha Hasta</label>
-            <input
-              type="date"
-              class="form-control"
-              name="fechaHasta"
-              id="fecha-hasta-reporte"
-              v-model="fechaHasta"
-            />
-          </div>
-          <input
-            type="submit"
-            class="btn btn-primary btn-lg rounded-lg"
-            value="Buscar"
-          />
         </form>
       </div>
     </div>
   </div>
-  <div class="container bg-white p-5" v-if="this.ingresos.length == 0 && showMessage">
+  <div
+    class="container bg-white p-3 mt-5 redondeado sombra"
+    v-if="this.ingresos.length == 0 && showMessage"
+  >
     <div class="row">
       <div class="col">
         <h2 class="text-center">No se encontraron resultados</h2>
       </div>
     </div>
   </div>
-  <div class="container-fluid pr-5 pl-5" v-if="this.ingresos.length > 0 ">
+  <div class="container-fluid pr-5 pl-5" v-if="this.ingresos.length > 0">
     <div class="row tabla p-4">
       <div class="col-12 text-left p-4">
         <h4>Fecha Desde: {{ this.fechaDesde }}</h4>
@@ -104,24 +128,29 @@ export default {
       ingresos: [],
       egresos: [],
       idEmpleado: null,
-      empleado: null,
+      empleado: "",
       fechaDesde: null,
       fechaHasta: null,
       showMessage: false,
     };
   },
-  created(){
+  created() {
     this.idEmpleado = this.$route.params.id;
-    this.nombreEmpleado = this.$route.params.nombre;
-    
-    console.log(this.nombreEmpleado)
+    this.getEmpleado();
   },
-  mounted() {
-
-  },
+  mounted() {},
   methods: {
     normalizarHora(hora) {
       return hora.toString().substring(11, 16);
+    },
+    getEmpleado() {
+      axios
+        .get(process.env.VUE_APP_API_ROUTE + "empleado/" + this.idEmpleado)
+        .then((res) => {
+          console.log(res);
+          this.empleado = res.data.empleados;
+          console.log(this.empleado);
+        });
     },
     getIngresos() {
       axios
@@ -169,7 +198,7 @@ export default {
         return this.$swal({
           icon: "warning",
           title: "Atención",
-          text: "La fecha hasta debe ser mayor a la fecha desde",
+          text: "Fecha Hasta debe ser mayor a Fecha Desde",
           confirmButtonColor: "black",
           confirmButtonText: "Cerrar",
         });
@@ -177,10 +206,18 @@ export default {
       this.getIngresos();
       this.getEgresos();
       this.showMessage = true;
-    }
+    },
   },
 };
 </script>
 
 <style>
+.redondeado {
+  border-radius: 10px;
+}
+.sombra {
+  box-shadow: 6px 10px 31px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 6px 10px 31px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 6px 10px 31px 0px rgba(0, 0, 0, 0.75);
+}
 </style>

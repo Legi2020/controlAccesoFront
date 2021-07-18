@@ -11,7 +11,7 @@ import Detalle from './components/Detalle.vue';
 const routes = [
     {path: '/', component: IEdelDia},
     {path: '/informe', component: Informe},
-    {path: '/informe/:id/:nombre', name: 'detalle', component: Detalle},
+    {path: '/informe/:id', name: 'detalle', component: Detalle},
 ]
 
 const router = createRouter({
