@@ -35,11 +35,21 @@
             <div class="col-6">
               <div class="form-group">
                 <label for="fecha-desde-reporte">Hora ingreso</label>
-                <input type="time" class="form-control" name="horIngreso" />
+                <input
+                  type="time"
+                  class="form-control"
+                  name="horaIngreso"
+                  v-model="horaIngreso"
+                />
               </div>
               <div class="form-group">
                 <label for="fecha-desde-reporte">Hora egreso</label>
-                <input type="time" class="form-control" name="horaEgreso" />
+                <input
+                  type="time"
+                  class="form-control"
+                  name="horaEgreso"
+                  v-model="horaEgreso"
+                />
               </div>
             </div>
             <div class="col-12 mb-4">
@@ -71,6 +81,16 @@
         <h4>Fecha Hasta: {{ this.fechaHasta }}</h4>
         <h4>Cantidad Ingresos: {{ this.ingresos.length }}</h4>
         <h4>Cantidad Egresos: {{ this.egresos.length }}</h4>
+        <h4 v-if="this.retrasoIngreso">
+          Retraso Ingreso: {{ this.retrasoIngreso.tiempo }}
+          {{ this.retrasoIngreso.unidad }} / 
+          {{ minToHour(this.retrasoIngreso.tiempo) }} hs
+        </h4>
+        <h4 v-if="this.retrasoEgreso">
+          Tiempo extra: {{ this.retrasoEgreso.tiempo }}
+          {{ this.retrasoEgreso.unidad }} / 
+          {{ minToHour(this.retrasoEgreso.tiempo) }} hs
+        </h4>
       </div>
       <div class="col-5 p-0" v-if="ingresos.length > 0">
         <h1 class="p-3">Ingresos</h1>
@@ -79,19 +99,21 @@
             <tr>
               <th scope="col" class="align-middle">Fecha</th>
               <th scope="col" class="align-middle">Hora</th>
-              <th scope="col" class="align-middle ">Nota</th>
+              <th scope="col" class="align-middle">Nota</th>
               <th scope="col" class="align-middle">Imagen</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="ingreso in ingresos" :key="ingreso.id">
-              <td class="align-middle text-center">{{ ingreso.fecha }}</td>
+              <td class="align-middle text-center">
+                {{ formatDate(ingreso.fecha) }}
+              </td>
               <td class="align-middle text-center">
                 {{ normalizarHora(ingreso.hora) }}
               </td>
-                <td class="align-middle text-center max-ancho">
-                  {{ ingreso.nota }}
-                </td>
+              <td class="align-middle text-center max-ancho">
+                {{ ingreso.nota }}
+              </td>
               <td class="align-middle text-center"></td>
             </tr>
           </tbody>
@@ -110,13 +132,15 @@
           </thead>
           <tbody>
             <tr v-for="egreso in egresos" :key="egreso.id">
-              <td class="align-middle text-center">{{ egreso.fecha }}</td>
+              <td class="align-middle text-center">
+                {{ formatDate(egreso.fecha) }}
+              </td>
               <td class="align-middle text-center">
                 {{ normalizarHora(egreso.hora) }}
               </td>
-                <td class="align-middle text-center max-ancho">
-                  {{ egreso.nota }}
-                </td>
+              <td class="align-middle text-center max-ancho">
+                {{ egreso.nota }}
+              </td>
               <td class="align-middle text-center"></td>
             </tr>
           </tbody>
@@ -139,6 +163,10 @@ export default {
       empleado: "",
       fechaDesde: null,
       fechaHasta: null,
+      horaIngreso: null,
+      horaEgreso: null,
+      retrasoIngreso: null,
+      retrasoEgreso: null,
       showMessage: false,
     };
   },
@@ -157,7 +185,6 @@ export default {
         .then((res) => {
           console.log(res);
           this.empleado = res.data.empleados;
-          console.log(this.empleado);
         });
     },
     getIngresos() {
@@ -167,12 +194,15 @@ export default {
             id: this.idEmpleado,
             fechaDesde: this.fechaDesde,
             fechaHasta: this.fechaHasta,
+            horaIngreso: this.horaIngreso,
+            horaEgreso: this.horaEgreso,
           },
         })
         .then((res) => {
           console.log(res.data);
           if (res.data.error == false) {
             this.ingresos = res.data.ingresos;
+            this.retrasoIngreso = res.data.retraso;
           }
         });
     },
@@ -183,11 +213,13 @@ export default {
             id: this.idEmpleado,
             fechaDesde: this.fechaDesde,
             fechaHasta: this.fechaHasta,
+            horaEgreso: this.horaEgreso,
           },
         })
         .then((res) => {
           if (res.data.error == false) {
             this.egresos = res.data.egresos;
+            this.retrasoEgreso = res.data.tiempoExtra;
           }
         });
     },
@@ -215,6 +247,12 @@ export default {
       this.getEgresos();
       this.showMessage = true;
     },
+    formatDate(date) {
+      return date.split("T")[0];
+    },
+    minToHour(min) {
+      return Math.round(min / 60);
+    },
   },
 };
 </script>
@@ -229,8 +267,8 @@ export default {
   -moz-box-shadow: 6px 10px 31px 0px rgba(0, 0, 0, 0.75);
 }
 
-.max-ancho{
-  max-width: 300px;
+.max-ancho {
+  max-width: 150px;
   word-wrap: break-word;
   text-align: justify !important;
 }
