@@ -6,10 +6,10 @@
         <table class="table" v-if="empleados.length > 0">
           <thead class="text-center thead-dark">
             <tr>
-              <th scope="col" class="align-middle">Empleado</th>
-              <th scope="col" class="align-middle">Ingreso</th>
-              <th scope="col" class="align-middle">Egreso</th>
-              <th scope="col" class="align-middle">Acciones</th>
+              <th scope="col" class="align-middle titulo">Empleados</th>
+              <th scope="col" class="align-middle titulo">Ingresos</th>
+              <th scope="col" class="align-middle titulo">Egresos</th>
+              <th scope="col" class="align-middle titulo">Realizar</th>
             </tr>
           </thead>
           <tbody>
@@ -38,7 +38,7 @@
                   class="btn btn-primary"
                   style="margin: 13px"
                 >
-                  Ingresos
+                  Ingreso
                 </button>
                 <button
                   type="button"
@@ -260,5 +260,8 @@ li {
 textarea {
   min-height: 100px;
   max-height: 100px;
+}
+.titulo{
+  font-size: 18px !important;
 }
 </style>

@@ -7,11 +7,13 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import IEdelDia from './components/IEdelDia.vue';
 import Informe from './components/Informe.vue';
 import Detalle from './components/Detalle.vue';
+import Login from './components/Login.vue';
 
 const routes = [
     {path: '/', component: IEdelDia},
     {path: '/informe', component: Informe},
     {path: '/informe/:id', name: 'detalle', component: Detalle},
+    {path: '/login', component: Login},
 ]
 
 const router = createRouter({

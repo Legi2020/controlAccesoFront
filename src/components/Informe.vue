@@ -6,8 +6,8 @@
         <table class="table">
           <thead class="text-center thead-dark">
             <tr>
-              <th scope="col" class="align-middle">Empleado</th>
-              <th scope="col" class="align-middle">Informe</th>
+              <th scope="col" class="align-middle titulo">Empleado</th>
+              <th scope="col" class="align-middle titulo">Informe</th>
             </tr>
           </thead>
           <tbody v-if="empleados">
@@ -70,5 +70,9 @@ export default {
   box-shadow: 6px 10px 31px 0px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: 6px 10px 31px 0px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 6px 10px 31px 0px rgba(0, 0, 0, 0.75);
+  font-size: 18px;
+}
+.titulo{
+  font-size: 18px !important;
 }
 </style>

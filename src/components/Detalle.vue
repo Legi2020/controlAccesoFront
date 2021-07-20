@@ -77,19 +77,31 @@
   <div class="container-fluid pr-5 pl-5" v-if="this.ingresos.length > 0">
     <div class="row tabla p-4">
       <div class="col-12 text-left p-4">
-        <h4>Fecha Desde: {{ this.fechaDesde }}</h4>
-        <h4>Fecha Hasta: {{ this.fechaHasta }}</h4>
-        <h4>Cantidad Ingresos: {{ this.ingresos.length }}</h4>
-        <h4>Cantidad Egresos: {{ this.egresos.length }}</h4>
+        <h4>
+          Fecha Desde: <span>{{ this.fechaDesde }}</span>
+        </h4>
+        <h4>
+          Fecha Hasta: <span>{{ this.fechaHasta }}</span>
+        </h4>
+        <h4>
+          Cantidad Ingresos:<span>{{ this.ingresos.length }}</span>
+        </h4>
+        <h4>
+          Cantidad Egresos: <span>{{ this.egresos.length }}</span>
+        </h4>
         <h4 v-if="this.retrasoIngreso">
-          Retraso Ingreso: {{ this.retrasoIngreso.tiempo }}
-          {{ this.retrasoIngreso.unidad }} / 
-          {{ minToHour(this.retrasoIngreso.tiempo) }} hs
+          Retraso Ingreso:
+          <span
+            >{{ this.retrasoIngreso.tiempo }} {{ this.retrasoIngreso.unidad }} /
+            {{ minToHour(this.retrasoIngreso.tiempo) }} hs
+          </span>
         </h4>
         <h4 v-if="this.retrasoEgreso">
-          Tiempo extra: {{ this.retrasoEgreso.tiempo }}
-          {{ this.retrasoEgreso.unidad }} / 
-          {{ minToHour(this.retrasoEgreso.tiempo) }} hs
+          Tiempo extra:
+          <span
+            >{{ this.retrasoEgreso.tiempo }} {{ this.retrasoEgreso.unidad }} /
+            {{ minToHour(this.retrasoEgreso.tiempo) }} hs
+          </span>
         </h4>
       </div>
       <div class="col-5 p-0" v-if="ingresos.length > 0">
@@ -251,7 +263,7 @@ export default {
       return date.split("T")[0];
     },
     minToHour(min) {
-      return Math.round(min / 60);
+      return (min / 60).toFixed(2);
     },
   },
 };
@@ -271,5 +283,13 @@ export default {
   max-width: 150px;
   word-wrap: break-word;
   text-align: justify !important;
+}
+
+h4 {
+  text-transform: capitalize;
+}
+
+span{
+  color: grey;
 }
 </style>
