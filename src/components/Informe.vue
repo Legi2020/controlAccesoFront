@@ -72,7 +72,7 @@ export default {
   -moz-box-shadow: 6px 10px 31px 0px rgba(0, 0, 0, 0.75);
   font-size: 18px;
 }
-.titulo{
+.titulo {
   font-size: 18px !important;
 }
 </style>

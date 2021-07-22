@@ -21,8 +21,25 @@
             >
           </li>
           <li class="nav-item">
-            <router-link to="/informe" active-class="active" class="nav-link"
+            <router-link
+              to="/informe"
+              active-class="active"
+              class="nav-link"
+              v-if="logueado"
               >Informe</router-link
+            >
+          </li>
+          <li class="nav-item">
+            <router-link  @click="logout" to='/login' class="nav-link" v-if="logueado"
+              >Salir</router-link
+            >
+          </li>
+          <li class="nav-item">
+            <router-link
+              to="/login"
+              class="nav-link"
+              v-if="!logueado"
+              >Iniciar Sesion</router-link
             >
           </li>
         </div>
@@ -34,14 +51,30 @@
 <script>
 export default {
   name: "Header",
-  props: {
-    msg: String,
+  data() {
+    return {
+      logueado: false,
+    };
   },
+  mounted(){
+     this.isLogueado();
+     this.$forceUpdate();
+  },
+ methods: {
+   logout(){
+     localStorage.removeItem('token');
+     localStorage.removeItem('logueado');
+     this.$router.redirect('login');
+   },
+   isLogueado(){
+      this.logueado = localStorage.getItem("logueado")
+   }
+ }
 };
 </script>
 
 <style>
-.nav-link{
+.nav-link {
   font-size: 15px;
 }
 </style>

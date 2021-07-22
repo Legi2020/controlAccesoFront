@@ -51,19 +51,55 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-    data(){
-        return {
-            user: '',
-            password: '',
-        }
+  data() {
+    return {
+      user: "",
+      password: "",
+    };
+  },
+  methods: {
+    login() {
+      if (!this.user || !this.password) {
+        return this.$swal({
+          icon: "warning",
+          title: "Atención",
+          text: "Ambas campos son obligatorios",
+          confirmButtonColor: "black",
+          confirmButtonText: "Cerrar",
+        });
+      }
+      axios
+        .post(process.env.VUE_APP_API_ROUTE + "login", {
+          headers: {
+            "Content-Type": "application/json",
+            apiKey:
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFwbGljYWNpb24gaG9yYXJpb3MgY29sbWVkMyBmaXJtZURpZ2l0YWwiLCJhcHAiOjE1MTYyMzkwMjJ9.dQcQMKVqJMqKlrpTCJ7Vq5KGwN3gBnTHRma85IVIt5U",
+          },
+          data: {
+            user: this.user,
+            password: this.password,
+          },
+        })
+        .then((resp) => {
+          if (resp.data.error) {
+            this.user = "";
+            this.password = "";
+            return this.$swal({
+              icon: "error",
+              title: "Atención",
+              text: "Credenciales incorrectas",
+              confirmButtonColor: "black",
+              confirmButtonText: "Cerrar",
+            });
+          }
+          localStorage.setItem('token', resp.data.token);
+          this.$router.push("/informe");
+        });
     },
-    methods: {
-        login(){
-            console.log(this.user);
-            console.log(this.password);
-        }
-    }
+  },
 };
 </script>
 

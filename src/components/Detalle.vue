@@ -104,15 +104,14 @@
           </span>
         </h4>
       </div>
-      <div class="col-5 p-0" v-if="ingresos.length > 0">
+      <div class="col-6 p-0" v-if="ingresos.length > 0">
         <h1 class="p-3">Ingresos</h1>
-        <table class="table">
+        <table class="table mx-auto">
           <thead class="text-center thead-dark">
             <tr>
               <th scope="col" class="align-middle">Fecha</th>
               <th scope="col" class="align-middle">Hora</th>
               <th scope="col" class="align-middle">Nota</th>
-              <th scope="col" class="align-middle">Imagen</th>
             </tr>
           </thead>
           <tbody>
@@ -126,12 +125,11 @@
               <td class="align-middle text-center max-ancho">
                 {{ ingreso.nota }}
               </td>
-              <td class="align-middle text-center"></td>
             </tr>
           </tbody>
         </table>
       </div>
-      <div class="col-6 offset-1 p-1" v-if="ingresos.length > 0">
+      <div class="col-6 p-0" v-if="egresos.length > 0">
         <h1 class="p-3">Egresos</h1>
         <table class="table">
           <thead class="text-center thead-dark">
@@ -139,7 +137,6 @@
               <th scope="col" class="align-middle">Fecha</th>
               <th scope="col" class="align-middle">Hora</th>
               <th scope="col" class="align-middle">Nota</th>
-              <th scope="col" class="align-middle">Imagen</th>
             </tr>
           </thead>
           <tbody>
@@ -153,7 +150,6 @@
               <td class="align-middle text-center max-ancho">
                 {{ egreso.nota }}
               </td>
-              <td class="align-middle text-center"></td>
             </tr>
           </tbody>
         </table>
@@ -202,6 +198,9 @@ export default {
     getIngresos() {
       axios
         .post(process.env.VUE_APP_API_ROUTE + "ingresos", {
+          headers: {
+            "Content-Type": "application/json",
+          },
           data: {
             id: this.idEmpleado,
             fechaDesde: this.fechaDesde,
@@ -211,7 +210,6 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res.data);
           if (res.data.error == false) {
             this.ingresos = res.data.ingresos;
             this.retrasoIngreso = res.data.retraso;
@@ -221,6 +219,9 @@ export default {
     getEgresos() {
       axios
         .post(process.env.VUE_APP_API_ROUTE + "egresos", {
+          headers: {
+            "Content-Type": "application/json",
+          },
           data: {
             id: this.idEmpleado,
             fechaDesde: this.fechaDesde,
@@ -289,7 +290,7 @@ h4 {
   text-transform: capitalize;
 }
 
-span{
+span {
   color: grey;
 }
 </style>

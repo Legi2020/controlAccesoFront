@@ -79,8 +79,6 @@ export default {
         .get(process.env.VUE_APP_API_ROUTE + "empleado", {
           headers: {
             "Content-Type": "application/json",
-            apiKey:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFwbGljYWNpb24gaG9yYXJpb3MgY29sbWVkMyBmaXJtZURpZ2l0YWwiLCJhcHAiOjE1MTYyMzkwMjJ9.dQcQMKVqJMqKlrpTCJ7Vq5KGwN3gBnTHRma85IVIt5U",
           },
         })
         .then((res) => {
@@ -96,8 +94,6 @@ export default {
         .get(process.env.VUE_APP_API_ROUTE + "ingreso/hoy", {
           headers: {
             "Content-Type": "application/json",
-            apiKey:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFwbGljYWNpb24gaG9yYXJpb3MgY29sbWVkMyBmaXJtZURpZ2l0YWwiLCJhcHAiOjE1MTYyMzkwMjJ9.dQcQMKVqJMqKlrpTCJ7Vq5KGwN3gBnTHRma85IVIt5U",
           },
         })
         .then((res) => {
