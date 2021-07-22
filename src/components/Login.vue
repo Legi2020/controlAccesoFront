@@ -96,7 +96,8 @@ export default {
             });
           }
           localStorage.setItem('token', resp.data.token);
-          this.$router.push("/informe");
+          localStorage.setItem("logueado", true);
+          this.$router.push("/");
         });
     },
   },

@@ -16,12 +16,12 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <li class="nav-item">
-            <router-link to="/" active-class="active" class="nav-link"
+            <router-link @click="isLogueado" to="/" active-class="active" class="nav-link"
               >Inicio</router-link
             >
           </li>
           <li class="nav-item">
-            <router-link
+            <router-link  @click="isLogueado"
               to="/informe"
               active-class="active"
               class="nav-link"
@@ -35,7 +35,7 @@
             >
           </li>
           <li class="nav-item">
-            <router-link
+            <router-link @click="isLogueado"
               to="/login"
               class="nav-link"
               v-if="!logueado"
@@ -56,18 +56,19 @@ export default {
       logueado: false,
     };
   },
-  mounted(){
+  updated(){
      this.isLogueado();
-     this.$forceUpdate();
   },
  methods: {
    logout(){
      localStorage.removeItem('token');
      localStorage.removeItem('logueado');
-     this.$router.redirect('login');
+     this.isLogueado();
+     this.$router.push({ path: '/login' });
    },
    isLogueado(){
-      this.logueado = localStorage.getItem("logueado")
+     console.log('pase papu gomez');
+      this.logueado = localStorage.getItem("logueado");
    }
  }
 };
