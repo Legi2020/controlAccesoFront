@@ -30,6 +30,8 @@ if (token) {
 
 const router = createRouter({
   history: createWebHistory(),
+  saveScrollPosition: true,
+  transitionOnLoad: true,
   routes,
 });
 
@@ -49,7 +51,6 @@ router.beforeEach((to, from, next) => {
           localStorage.setItem("logueado", true);
           next();
         } else {
-          console.log("invalido");
           router.push("login");
           localStorage.setItem("logueado", false);
         }

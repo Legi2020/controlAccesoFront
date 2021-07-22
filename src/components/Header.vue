@@ -14,63 +14,72 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <li class="nav-item">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown">
             <router-link @click="isLogueado" to="/" active-class="active" class="nav-link"
               >Inicio</router-link
             >
           </li>
-          <li class="nav-item">
-            <router-link  @click="isLogueado"
+          <li class="nav-item dropdown">
+            <router-link
+              @click="isLogueado"
               to="/informe"
               active-class="active"
               class="nav-link"
-              v-if="logueado"
+              v-if="logueado === 'true'"
               >Informe</router-link
             >
           </li>
-          <li class="nav-item">
-            <router-link  @click="logout" to='/login' class="nav-link" v-if="logueado"
-              >Salir</router-link
-            >
-          </li>
-          <li class="nav-item">
-            <router-link @click="isLogueado"
-              to="/login"
-              class="nav-link"
-              v-if="!logueado"
-              >Iniciar Sesion</router-link
-            >
-          </li>
-        </div>
+        </ul>
+        <span class="navbar-text">
+          <router-link
+            @click="isLogueado"
+            to="/login"
+            active-class="active"
+            class="nav-link text-right"
+            v-if="logueado === 'false'"
+            >Iniciar Sesion</router-link
+          ></span
+        >
+        <span class="navbar-text">
+          <router-link
+            @click="logout"
+            to="/login"
+            active-class="active"
+            class="nav-link"
+            v-if="logueado === 'true'"
+            >Salir</router-link
+          ></span
+        >
       </div>
     </nav>
   </header>
 </template>
 
 <script>
+
 export default {
   name: "Header",
   data() {
     return {
-      logueado: false,
+      logueado: localStorage.getItem("logueado"),
     };
   },
-  updated(){
-     this.isLogueado();
-  },
- methods: {
-   logout(){
-     localStorage.removeItem('token');
-     localStorage.removeItem('logueado');
-     this.isLogueado();
-     this.$router.push({ path: '/login' });
-   },
-   isLogueado(){
-     console.log('pase papu gomez');
+  methods: {
+    logout() {
+      localStorage.setItem("token", "");
+      localStorage.setItem("logueado", false);
+      this.isLogueado();
+      this.$router.push({ path: "/login" });
+    },
+    isLogueado() {
       this.logueado = localStorage.getItem("logueado");
-   }
- }
+      return this.logueado;
+    },
+  },
+   beforeUpdate() {
+    this.isLogueado();
+  }
 };
 </script>
 

@@ -95,9 +95,10 @@ export default {
               confirmButtonText: "Cerrar",
             });
           }
-          localStorage.setItem('token', resp.data.token);
+          localStorage.setItem("token", resp.data.token);
           localStorage.setItem("logueado", true);
-          this.$router.push("/");
+          this.$router.push({ path: "/" });
+          setTimeout( () => this.$router.go(), 500);
         });
     },
   },

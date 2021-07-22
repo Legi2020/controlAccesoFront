@@ -106,7 +106,7 @@
       </div>
       <div class="col-6 p-0" v-if="ingresos.length > 0">
         <h1 class="p-3">Ingresos</h1>
-        <table class="table mx-auto">
+        <table class="table mx-auto table-bordered table-striped table-hover">
           <thead class="text-center thead-dark">
             <tr>
               <th scope="col" class="align-middle">Fecha</th>
@@ -131,7 +131,7 @@
       </div>
       <div class="col-6 p-0" v-if="egresos.length > 0">
         <h1 class="p-3">Egresos</h1>
-        <table class="table">
+        <table class="table table-bordered table-striped table-hover">
           <thead class="text-center thead-dark">
             <tr>
               <th scope="col" class="align-middle">Fecha</th>
@@ -191,7 +191,6 @@ export default {
       axios
         .get(process.env.VUE_APP_API_ROUTE + "empleado/" + this.idEmpleado)
         .then((res) => {
-          console.log(res);
           this.empleado = res.data.empleados;
         });
     },
