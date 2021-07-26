@@ -74,9 +74,16 @@
       </div>
     </div>
   </div>
-  <div class="container-fluid pr-5 pl-5" v-if="this.ingresos.length > 0">
+  <div
+    class="container-fluid pr-5 pl-5"
+    id="export"
+    v-if="this.ingresos.length > 0"
+  >
     <div class="row tabla p-4">
       <div class="col-12 text-left p-4">
+         <h4>
+          Empleado: <span> {{ empleado.apellido }} {{ empleado.nombre }}</span>
+        </h4>
         <h4>
           Fecha Desde: <span>{{ this.fechaDesde }}</span>
         </h4>
@@ -103,6 +110,15 @@
             {{ minToHour(this.retrasoEgreso.tiempo) }} hs
           </span>
         </h4>
+        <a
+          type="button"
+          download="logo.gif"
+          @click="exportar('export', this.empleado.nombre)"
+          class="btn btn-primary btn-md rounded-lg"
+          value="Exportar"
+        >
+          Exportar
+        </a>
       </div>
       <div class="col-6 p-0" v-if="ingresos.length > 0">
         <h1 class="p-3">Ingresos</h1>
@@ -176,6 +192,17 @@ export default {
       retrasoIngreso: null,
       retrasoEgreso: null,
       showMessage: false,
+      uri: "data:application/vnd.ms-excel;base64,",
+      template:
+        '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+      base64: function (s) {
+        return window.btoa(unescape(encodeURIComponent(s)));
+      },
+      format: function (s, c) {
+        return s.replace(/{(\w+)}/g, function (m, p) {
+          return c[p];
+        });
+      },
     };
   },
   created() {
@@ -264,6 +291,15 @@ export default {
     },
     minToHour(min) {
       return (min / 60).toFixed(2);
+    },
+    exportar(table, name) {
+      table = document.getElementById(table);
+      let fileName = this.empleado.apellido+' '+this.empleado.nombre+'_'+this.fechaDesde+'_'+this.fechaHasta;
+      var ctx = { worksheet: name || "Worksheet", table: table.innerHTML };
+        var a = document.createElement('a');
+        a.href = this.uri + this.base64(this.format(this.template, ctx));
+        a.download = fileName + '.xls';
+        a.click();
     },
   },
 };
