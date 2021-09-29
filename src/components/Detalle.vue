@@ -128,6 +128,7 @@
               <th scope="col" class="align-middle">Fecha</th>
               <th scope="col" class="align-middle">Hora</th>
               <th scope="col" class="align-middle">Nota</th>
+              <th scope="col" class="align-middle">Edición Nota Admin</th>
             </tr>
           </thead>
           <tbody>
@@ -141,6 +142,16 @@
               <td class="align-middle text-center max-ancho">
                 {{ ingreso.nota }}
               </td>
+              <td class="align-middle text-center max-ancho">
+                <button
+                  type="button"
+                  @click="modificacionNotaIngreso(ingreso.id)"
+                  class="btn btn-primary"
+                  style="margin: 13px"
+                >
+                  EDITAR NOTA
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -153,6 +164,7 @@
               <th scope="col" class="align-middle">Fecha</th>
               <th scope="col" class="align-middle">Hora</th>
               <th scope="col" class="align-middle">Nota</th>
+              <th scope="col" class="align-middle">Edición Nota Admin</th>
             </tr>
           </thead>
           <tbody>
@@ -165,6 +177,17 @@
               </td>
               <td class="align-middle text-center max-ancho">
                 {{ egreso.nota }}
+              </td>
+              <td class="align-middle text-center max-ancho">
+                <button
+                  type="button"
+                  @click="modificacionNotaEgreso(egreso.id)"
+                  class="btn btn-primary"
+                  style="margin: 13px"
+                  :id="empleado.id"
+                >
+                  EDITAR NOTA
+                </button>
               </td>
             </tr>
           </tbody>
@@ -285,6 +308,104 @@ export default {
       this.getIngresos();
       this.getEgresos();
       this.showMessage = true;
+    },
+    modificacionNotaIngreso(ingresoId) {
+      this.$swal
+        .fire({
+          input: "textarea",
+          title: 'Modificar nota existente',
+          inputLabel: "Modifique la nota",
+          confirmButtonText: `Modificar`,
+          cancelButtonText: `Cancelar`,
+          showCancelButton: true,
+          confirmButtonColor: "black",
+          cancelButtonColor: "black",
+        })
+        .then((res) => {
+          if (res.isDismissed) {
+            return;
+          }
+          let nota = res.value;
+          axios
+            .put(process.env.VUE_APP_API_ROUTE + "ingreso/nota", {
+              headers: {
+                "Content-Type": "application/json",
+                apiKey:
+                  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFwbGljYWNpb24gaG9yYXJpb3MgY29sbWVkMyBmaXJtZURpZ2l0YWwiLCJhcHAiOjE1MTYyMzkwMjJ9.dQcQMKVqJMqKlrpTCJ7Vq5KGwN3gBnTHRma85IVIt5U",
+              },
+              data: {
+                idIngreso: ingresoId,
+                nota,
+              },
+            })
+            .then((res) => {
+              if (res.data.error === false) {
+                return this.$swal({
+                  icon: "success",
+                  title: "Éxito",
+                  text: "Por favor realice la busqueda nuevamente para ver los cambios",
+                  confirmButtonColor: "black",
+                  confirmButtonText: "Cerrar",
+                });
+              }
+              return this.$swal({
+                icon: "warning",
+                title: "Atención",
+                text: res.data.message,
+                confirmButtonColor: "black",
+                confirmButtonText: "Cerrar",
+              });
+            });
+        });
+    },
+    modificacionNotaEgreso(egresoId) {
+      this.$swal
+        .fire({
+          input: "textarea",
+          title: "Modificar nota existente",
+          inputLabel: "Modifique la nota",
+          confirmButtonText: `Modificar`,
+          cancelButtonText: `Cancelar`,
+          showCancelButton: true,
+          confirmButtonColor: "black",
+          cancelButtonColor: "black",
+        })
+        .then((res) => {
+          if (res.isDismissed) {
+            return;
+          }
+          let nota = res.value;
+          axios
+            .put(process.env.VUE_APP_API_ROUTE + "egreso/nota", {
+              headers: {
+                "Content-Type": "application/json",
+                apiKey:
+                  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFwbGljYWNpb24gaG9yYXJpb3MgY29sbWVkMyBmaXJtZURpZ2l0YWwiLCJhcHAiOjE1MTYyMzkwMjJ9.dQcQMKVqJMqKlrpTCJ7Vq5KGwN3gBnTHRma85IVIt5U",
+              },
+              data: {
+                idEgreso: egresoId,
+                nota,
+              },
+            })
+            .then((res) => {
+              if (res.data.error === false) {
+                return this.$swal({
+                  icon: "success",
+                  title: "Éxito",
+                  text: "Por favor realice la busqueda nuevamente para ver los cambios",
+                  confirmButtonColor: "black",
+                  confirmButtonText: "Cerrar",
+                });
+              }
+              return this.$swal({
+                icon: "warning",
+                title: "Atención",
+                text: res.data.message,
+                confirmButtonColor: "black",
+                confirmButtonText: "Cerrar",
+              });
+            });
+        });
     },
     formatDate(date) {
       return date.split("T")[0];
