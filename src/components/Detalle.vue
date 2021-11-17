@@ -128,6 +128,8 @@
               <th scope="col" class="align-middle">Fecha</th>
               <th scope="col" class="align-middle">Hora</th>
               <th scope="col" class="align-middle">Nota</th>
+              <th scope="col" class="align-middle">Nota Administrador</th>
+              <th scope="col" class="align-middle">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -141,6 +143,18 @@
               <td class="align-middle text-center max-ancho">
                 {{ ingreso.nota }}
               </td>
+              <td class="align-middle text-center max-ancho">
+                {{ ingreso.notaAdmin }}
+              </td>
+              <td class="align-middle text-center">
+                <button
+                  type="button"
+                  @click="addNotaAdminIngreso(ingreso.id)"
+                  class="align-middle text-center btn btn-primary btn-lg rounded-lg"
+                >
+                  AGREGAR NOTA ADMINISTRADOR
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -153,6 +167,8 @@
               <th scope="col" class="align-middle">Fecha</th>
               <th scope="col" class="align-middle">Hora</th>
               <th scope="col" class="align-middle">Nota</th>
+              <th scope="col" class="align-middle">Nota Administrador</th>
+              <th scope="col" class="align-middle">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -165,6 +181,18 @@
               </td>
               <td class="align-middle text-center max-ancho">
                 {{ egreso.nota }}
+              </td>
+              <td class="align-middle text-center max-ancho">
+                {{ egreso.notaAdmin }}
+              </td>
+                <td class="align-middle text-center">
+                <button
+                  type="button"
+                  @click="addNotaAdminEgreso(egreso.id)"
+                  class="align-middle text-center btn btn-primary btn-lg rounded-lg"
+                >
+                  AGREGAR NOTA ADMINISTRADOR
+                </button>
               </td>
             </tr>
           </tbody>
@@ -300,6 +328,104 @@ export default {
         a.href = this.uri + this.base64(this.format(this.template, ctx));
         a.download = fileName + '.xls';
         a.click();
+    },
+    addNotaAdminIngreso(ingresoId){
+      this.$swal
+        .fire({
+          input: "textarea",
+          title: 'Agregar nota',
+          inputLabel: "Agregue una nota",
+          confirmButtonText: `Confirmar`,
+          cancelButtonText: `Cancelar`,
+          showCancelButton: true,
+          confirmButtonColor: "black",
+          cancelButtonColor: "black",
+        })
+        .then((res) => {
+          if (res.isDismissed) {
+            return;
+          }
+          let nota = res.value;
+          axios
+            .put(process.env.VUE_APP_API_ROUTE + "ingreso/nota", {
+              headers: {
+                "Content-Type": "application/json",
+                apiKey:
+                  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFwbGljYWNpb24gaG9yYXJpb3MgY29sbWVkMyBmaXJtZURpZ2l0YWwiLCJhcHAiOjE1MTYyMzkwMjJ9.dQcQMKVqJMqKlrpTCJ7Vq5KGwN3gBnTHRma85IVIt5U",
+              },
+              data: {
+                idIngreso: ingresoId,
+                notaAdmin: nota,
+              },
+            })
+            .then((res) => {
+              if (res.data.error === false) {
+                return this.$swal({
+                  icon: "success",
+                  title: "Éxito",
+                  text: "Por favor realice la busqueda nuevamente para ver los cambios",
+                  confirmButtonColor: "black",
+                  confirmButtonText: "Cerrar",
+                });
+              }
+              return this.$swal({
+                icon: "warning",
+                title: "Atención",
+                text: res.data.message,
+                confirmButtonColor: "black",
+                confirmButtonText: "Cerrar",
+              });
+            });
+        });
+  },
+  addNotaAdminEgreso(egresoId){
+      this.$swal
+        .fire({
+          input: "textarea",
+          title: 'Agregar nota',
+          inputLabel: "Agregue una nota",
+          confirmButtonText: `Confirmar`,
+          cancelButtonText: `Cancelar`,
+          showCancelButton: true,
+          confirmButtonColor: "black",
+          cancelButtonColor: "black",
+        })
+        .then((res) => {
+          if (res.isDismissed) {
+            return;
+          }
+          let nota = res.value;
+          axios
+            .put(process.env.VUE_APP_API_ROUTE + "egreso/nota", {
+              headers: {
+                "Content-Type": "application/json",
+                apiKey:
+                  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFwbGljYWNpb24gaG9yYXJpb3MgY29sbWVkMyBmaXJtZURpZ2l0YWwiLCJhcHAiOjE1MTYyMzkwMjJ9.dQcQMKVqJMqKlrpTCJ7Vq5KGwN3gBnTHRma85IVIt5U",
+              },
+              data: {
+                idEgreso: egresoId,
+                notaAdmin: nota,
+              },
+            })
+            .then((res) => {
+              if (res.data.error === false) {
+                return this.$swal({
+                  icon: "success",
+                  title: "Éxito",
+                  text: "Por favor realice la busqueda nuevamente para ver los cambios",
+                  confirmButtonColor: "black",
+                  confirmButtonText: "Cerrar",
+                });
+              }
+              return this.$swal({
+                icon: "warning",
+                title: "Atención",
+                text: res.data.message,
+                confirmButtonColor: "black",
+                confirmButtonText: "Cerrar",
+              });
+            });
+        });
     },
   },
 };
