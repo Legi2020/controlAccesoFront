@@ -27,7 +27,7 @@
               <td class="align-middle text-center">
                 <ul>
                   <li v-for="egreso in empleado.egresos" :key="egreso.id">
-                    {{ normalizarHora(egreso.hora) }}
+                    <span v-if="egreso.hora">{{ normalizarHora(egreso.hora) }}</span>
                   </li>
                 </ul>
               </td>

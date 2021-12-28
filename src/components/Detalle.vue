@@ -138,7 +138,7 @@
                 {{ formatDate(ingreso.fecha) }}
               </td>
               <td class="align-middle text-center">
-                {{ normalizarHora(ingreso.hora) }}
+                  {{ normalizarHora(ingreso.hora) }}
               </td>
               <td class="align-middle text-center max-ancho">
                 {{ ingreso.nota }}
@@ -176,9 +176,10 @@
               <td class="align-middle text-center">
                 {{ formatDate(egreso.fecha) }}
               </td>
-              <td class="align-middle text-center">
+              <td  v-if="egreso.hora" class="align-middle text-center">
                 {{ normalizarHora(egreso.hora) }}
               </td>
+              <td v-else class="align-middle text-center">Sin registrar</td>
               <td class="align-middle text-center max-ancho">
                 {{ egreso.nota }}
               </td>
