@@ -3,6 +3,7 @@
     <div class="row tabla">
       <div class="col p-0">
         <h1 class="p-3">Administración</h1>
+        <p>{{ selected }}</p>
       </div>
       <div class="col-12">
         <h3 class="p-3">Registrar ingreso</h3>
@@ -11,12 +12,14 @@
             <div class="col-6">
               <div class="form-group">
                 <label for="empleado">Empleado</label>
-                <select class="form-control" id="empleado">
+                <select
+                  class="form-control"
+                  v-model="selected"
+                >
                   <option
                     v-for="empleado in empleados"
                     :key="empleado.id"
-                    :id="empleado.id"
-                    @click="setEmpleado(empleado.id)"
+                    v-bind:value="empleado.id"
                   >
                     {{ empleado.apellido }} {{ empleado.nombre }}
                   </option>
@@ -66,7 +69,7 @@ export default {
   data() {
     return {
       empleados: [],
-      empleado: 1,
+      selected: 1,
       fechaDesde: null,
       notaAfechaDesdedmin: null,
       uri: "data:application/vnd.ms-excel;base64,",
@@ -102,11 +105,8 @@ export default {
           }
         });
     },
-    setEmpleado(empleadoId) {
-      this.empleado = empleadoId;
-    },
     addIngreso() {
-      if (!this.empleado || !this.fechaDesde || !this.notaAdmin) {
+      if (!this.selected || !this.fechaDesde || !this.notaAdmin) {
         return this.$swal({
           icon: "warning",
           title: "Atención",
@@ -123,7 +123,7 @@ export default {
               "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFwbGljYWNpb24gaG9yYXJpb3MgY29sbWVkMyBmaXJtZURpZ2l0YWwiLCJhcHAiOjE1MTYyMzkwMjJ9.dQcQMKVqJMqKlrpTCJ7Vq5KGwN3gBnTHRma85IVIt5U",
           },
           data: {
-            empleadoId: this.empleado,
+            empleadoId: this.selected,
             fecha: this.fechaDesde,
             notaAdmin: this.notaAdmin,
           },
