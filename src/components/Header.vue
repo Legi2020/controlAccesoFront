@@ -30,6 +30,16 @@
               >Informe</router-link
             >
           </li>
+           <li class="nav-item dropdown">
+            <router-link
+              @click="isLogueado"
+              to="/administracion"
+              active-class="active"
+              class="nav-link"
+              v-if="logueado === 'true'"
+              >Administración</router-link
+            >
+          </li>
         </ul>
         <span class="navbar-text">
           <router-link

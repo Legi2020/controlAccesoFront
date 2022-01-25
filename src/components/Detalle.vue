@@ -137,9 +137,10 @@
               <td class="align-middle text-center">
                 {{ formatDate(ingreso.fecha) }}
               </td>
-              <td class="align-middle text-center">
-                  {{ normalizarHora(ingreso.hora) }}
+              <td  v-if="ingreso.hora" class="align-middle text-center">
+                {{ normalizarHora(ingreso.hora) }}
               </td>
+              <td v-else class="align-middle text-center">Sin registrar</td>
               <td class="align-middle text-center max-ancho">
                 {{ ingreso.nota }}
               </td>

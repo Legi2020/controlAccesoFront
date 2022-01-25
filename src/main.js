@@ -4,6 +4,7 @@ import VueSweetalert2 from "vue-sweetalert2";
 import { createWebHistory, createRouter } from "vue-router";
 import "sweetalert2/dist/sweetalert2.min.css";
 
+import Administracion from "./components/Administracion.vue";
 import IEdelDia from "./components/IEdelDia.vue";
 import Informe from "./components/Informe.vue";
 import Detalle from "./components/Detalle.vue";
@@ -13,6 +14,7 @@ import axios from "axios";
 const routes = [
   { path: "/", name: 'home', component: IEdelDia },
   { path: "/informe", component: Informe, meta: { requiresAuth: true } },
+  { path: "/administracion", component: Administracion, meta: { requiresAuth: true } },
   {
     path: "/informe/:id",
     name: "detalle",
