@@ -3,7 +3,6 @@
     <div class="row tabla">
       <div class="col p-0">
         <h1 class="p-3">Administración</h1>
-        <p>{{ selected }}</p>
       </div>
       <div class="col-12">
         <h3 class="p-3">Registrar ingreso</h3>
@@ -110,7 +109,7 @@ export default {
         return this.$swal({
           icon: "warning",
           title: "Atención",
-          text: "Ambos campos son obligatorios",
+          text: "Todos los campos son obligatorios",
           confirmButtonColor: "black",
           confirmButtonText: "Cerrar",
         });
