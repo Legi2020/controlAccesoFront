@@ -20,7 +20,7 @@
               <td class="align-middle text-center">
                 <ul>
                   <li v-for="ingreso in empleado.ingresos" :key="ingreso.id">
-                    {{ normalizarHora(ingreso.hora) }}
+                     <span v-if="ingreso.hora">{{ normalizarHora(ingreso.hora) }}</span>
                   </li>
                 </ul>
               </td>
